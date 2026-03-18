@@ -1,0 +1,31 @@
+nameOverride: gostarter
+fullnameOverride: gostarter
+
+config:
+  service: gostarter
+
+image:
+  repository: gostarter
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 6060
+
+ingress:
+  enabled: true
+  hosts:
+    - host: gostarter.dev.infra
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

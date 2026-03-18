@@ -1,0 +1,29 @@
+apiVersion: skaffold/v4beta7
+kind: Config
+metadata:
+  name: gostarter
+
+build:
+  artifacts:
+    - image: gostarter
+      context: .
+      docker:
+        dockerfile: Dockerfile
+    - image: faker
+      context: build/faker
+      docker:
+        dockerfile: Dockerfile
+
+deploy:
+  helm:
+    releases:
+      - name: app
+        chartPath: build/helm/app
+        setValueTemplates:
+          image.repository: "{{.IMAGE_REPO_gostarter}}"
+          image.tag: "{{.IMAGE_TAG_gostarter}}"
+      - name: faker
+        chartPath: build/helm/faker
+        setValueTemplates:
+          image.repository: "{{.IMAGE_REPO_faker}}"
+          image.tag: "{{.IMAGE_TAG_faker}}"

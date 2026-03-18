@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "faker.fullname" . }}
+  labels:
+    app: {{ include "faker.name" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "faker.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "faker.name" . }}
+    spec:
+      containers:
+        - name: faker
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP

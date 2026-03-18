@@ -1,0 +1,19 @@
+nameOverride: faker
+fullnameOverride: faker
+
+image:
+  repository: faker
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 12003
+
+ingress:
+  enabled: true
+  hosts:
+    - host: faker.dev.infra
+      paths:
+        - path: /
+          pathType: Prefix

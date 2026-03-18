@@ -1,0 +1,9 @@
+1. Get the application URL by running:
+{{- if .Values.ingress.enabled }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ (index .Values.ingress.hosts 0).host }}/
+  Add to /etc/hosts: 127.0.0.1 {{ (index .Values.ingress.hosts 0).host }}
+{{- else }}
+  export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "app.fullname" . }})
+  export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+{{- end }}

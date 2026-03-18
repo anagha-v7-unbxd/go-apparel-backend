@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "app.fullname" . }}-test-connection"
+  annotations:
+    helm.sh/hook: test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget', '-q', '--spider', 'http://{{ include "app.fullname" . }}:{{ .Values.service.port }}/pong']
+  restartPolicy: Never

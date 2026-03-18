@@ -1,0 +1,2 @@
+# Faker mock service config (e.g. for mount or env)
+port: 12003
